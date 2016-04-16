@@ -5,8 +5,20 @@ output:
     keep_md: true
 ---
 
+```{r, echo=F, message=FALSE}
+library(RCurl)
+library(ggplot2)
+library(dplyr)
+```
+
 
 ## Loading and preprocessing the data
+
+
+```{r load_data}
+unzip(zipfile="activity.zip")
+activity_data <- read.csv("activity.csv")
+```
 
 
 
@@ -14,7 +26,31 @@ output:
 
 
 
+```{r analyzeStepMeans, warning=FALSE, message=FALSE}
+
+library(ggplot2)
+library(dplyr)
+steps_data <- aggregate(steps ~ date, data=activity_data, sum, na.rm = TRUE)
+ggplot(steps_data, aes(x=steps)) +geom_histogram(col="blue", fill="blue") 
+
+mean_steps <- mean(steps_data$steps, na.rm=TRUE)
+median_steps <- median(steps_data$steps, na.rm=TRUE)
+
+```
+
+
+
+|             | Mean  | Median |
+|-------------|-------|--------|
+| Daily Steps | `r formatC(mean_steps, format="d", big.mark=',')` | `r formatC(median_steps, format="d", big.mark=',')` |
+
 ## What is the average daily activity pattern?
+```{r averageDailyActivityPattern}
+library(ggplot2)
+
+
+```
+
 
 
 
