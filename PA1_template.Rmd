@@ -115,3 +115,9 @@ ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(dayType ~ .) +
     xlab("5-minute interval") + ylab("Number of steps")
 ```
 
+Some findings from the analysis above include:
+
+* Weekend step activity is more evenly spread than observed for the weekdays.
+* Weekday activity appears concentrated more in the morning than later in the day.  
+* Individuals start workouts later on the weekend vs the weekday.
+

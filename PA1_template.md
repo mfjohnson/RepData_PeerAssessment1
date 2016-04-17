@@ -1,10 +1,16 @@
 # Reproducible Research: Peer Assessment 1
 
+Load up the supporting libraries to support the analysis.
 
+```r
+library(RCurl)
+library(ggplot2)
+library(dplyr)
+```
 
 
 ## Loading and preprocessing the data
-
+Load the data from the activity zip file and unzip the file to support reading into the data frame.
 
 
 ```r
@@ -16,12 +22,9 @@ activity_data <- read.csv("activity.csv")
 
 ## What is mean total number of steps taken per day?
 
-
-
+***Analysis Note:*** Removed the NA values and ignoring the missing values for the analysis.
 
 ```r
-#library(ggplot2)
-#library(dplyr)
 steps_data <- aggregate(steps ~ date, data=activity_data, sum, na.rm = TRUE)
 ggplot(steps_data, aes(x=steps)) +geom_histogram(col="blue", fill="blue") 
 ```
@@ -34,10 +37,10 @@ median_steps <- median(steps_data$steps, na.rm=TRUE)
 ```
 
 
-
 |             | Mean  | Median |
 |-------------|-------|--------|
 | Daily Steps | 10,766 | 10,765 |
+
 
 ## What is the average daily activity pattern?
 
@@ -52,7 +55,7 @@ ggplot(dailyStepsByInterval, aes(x=interval, y=steps)) + geom_line() + xlab("5 m
 maxSteps <- dailyStepsByInterval[which.max(dailyStepsByInterval$steps),]
 ```
 
-On average across all the days in the dataset the 5-minute interval, contains the maximum number of steps?
+On average across all the days in the dataset the 5-minute interval, the table below contains the maximum number of steps:
 
 | Max Interval         | Max Number of steps |
 |----------------------|---------------------|
@@ -64,7 +67,7 @@ On average across all the days in the dataset the 5-minute interval, contains th
 
 Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+The following table contains a summary of rows with missing row values and those rows with values present (NOT NA) in the dataset (i.e. the total number of rows with NAs):
 
 ```r
 missingStepValues <- is.na(activity_data$steps)
@@ -108,6 +111,7 @@ median_steps <- median(adj_total_steps, na.rm=T)
 |-------------|-------|--------|
 | Daily Steps | 10,766 | 10,765 |
 
+NOTE: Inserting the mean interval value when a NA step value is encountered did not for this dataset impact the calculated means and median values.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -120,4 +124,10 @@ ggplot(averages, aes(interval, steps)) + geom_line() + facet_grid(dayType ~ .) +
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
+Some findings from the analysis above include:
+
+* Weekend step activity is more evenly spread than observed for the weekdays.
+* Weekday activity appears concentrated more in the morning than later in the day.  
+* Individuals start workouts later on the weekend vs the weekday.
 
