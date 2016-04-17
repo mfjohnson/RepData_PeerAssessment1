@@ -20,8 +20,8 @@ activity_data <- read.csv("activity.csv")
 
 
 ```r
-library(ggplot2)
-library(dplyr)
+#library(ggplot2)
+#library(dplyr)
 steps_data <- aggregate(steps ~ date, data=activity_data, sum, na.rm = TRUE)
 ggplot(steps_data, aes(x=steps)) +geom_histogram(col="blue", fill="blue") 
 ```
@@ -42,7 +42,6 @@ median_steps <- median(steps_data$steps, na.rm=TRUE)
 ## What is the average daily activity pattern?
 
 ```r
-library(ggplot2)
 dailyStepsByInterval <- activity_data %>% filter(!is.na(steps)) %>% group_by(interval) %>% summarize(steps = mean(steps))
 ggplot(dailyStepsByInterval, aes(x=interval, y=steps)) + geom_line() + xlab("5 minute interval")+ylab("Average number of steps taken")
 ```
